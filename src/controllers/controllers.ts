@@ -3,23 +3,19 @@ import { IStudentModel } from '../interfaces/IStudentModel';
 import { Student } from '../models/Student';
 
 export class StudentController {
-  static getAllStudents(req: Request, res: Response) {
-    return res.send(JSON.stringify('as'));
+  static async getAllStudents(req: Request, res: Response) {
+    const student = await Student.find();
+
+    return res.send(student);
   }
   static create(req: Request, res: Response) {
-    const student = StudentController.createStudent({
+    const student = new Student({
       rollNumber: 'Fall-2020-BSCS-022',
       name: 'Zafeer',
       password: '123456789',
     });
-
-    return res.send(JSON.stringify(student));
-  }
-  private static createStudent(studentInfo: IStudentModel) {
-    const student = new Student(studentInfo);
-
     student.save();
 
-    return student;
+    return res.send(JSON.stringify(student));
   }
 }
