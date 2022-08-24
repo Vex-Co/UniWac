@@ -4,18 +4,30 @@ import { Student } from '../models/Student';
 
 export class StudentController {
   static async getAllStudents(req: Request, res: Response) {
-    const student = await Student.find();
+    const students = await Student.find(
+      {},
+      { _id: false, __v: false, password: false }
+    ).select('rollNumber name');
 
-    return res.send(student);
+    return res.send(students);
   }
-  static create(req: Request, res: Response) {
-    const student = new Student({
-      rollNumber: 'Fall-2020-BSCS-022',
-      name: 'Zafeer',
-      password: '123456789',
-    });
-    student.save();
+  static createStudent(req: Request, res: Response) {
+    const name = req.query?.name;
+    const rollnumber = req.query?.rollnumber;
+    const password = req.query?.password;
 
-    return res.send(JSON.stringify(student));
+    if (name && rollnumber && password) {
+      const student = new Student({
+        rollNumber: rollnumber,
+        name: name,
+        password: password,
+      });
+      student.save();
+      return res.send(student);
+    } else {
+      return res.send({
+        error: 'Please give all the information to create new student.',
+      });
+    }
   }
 }
