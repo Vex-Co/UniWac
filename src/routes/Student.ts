@@ -1,9 +1,9 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
+import { StudentController } from '../controllers/controllers';
 
 const router = express.Router();
 
-router.get('/std', (req: Request, res: Response) => {
-  return res.send('Student');
-});
+router.get('/std', StudentController.getAllStudents);
+router.post('/std', StudentController.create);
 
 export const studentRouter = router;
