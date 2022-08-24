@@ -1,10 +1,7 @@
 import express, { Request, Response } from 'express';
-import { Student } from './models/Student';
+import { studentRouter } from './routes/Student';
 
 const app = express();
-
-app.post('/', (req: Request, res: Response) => {
-  return res.send('Home Page');
-});
+app.use(studentRouter);
 
 app.listen(3000);
