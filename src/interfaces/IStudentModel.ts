@@ -1,5 +1,5 @@
 export interface IStudentModel {
-  rollNumber: string;
-  name: string;
-  password: string;
+  rollNumber?: string;
+  name?: string;
+  password?: string;
 }
